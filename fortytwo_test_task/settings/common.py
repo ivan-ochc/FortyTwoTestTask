@@ -41,7 +41,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     'apps.hello',
 )
 
@@ -127,3 +126,13 @@ TEMPLATE_DIRS = (
 
 # Turn off south during test
 SOUTH_TESTS_MIGRATE = False
+
+FIXTURE_DIRS = (
+    os.path.join(BASE_DIR, '/apps/hello/fixtures'),
+)
+
+SOUTH_DATABASE_ADAPTERS = {
+     'default': "south.db.sqlite3"
+ }
+
+AUTH_USER_MODEL = 'hello.User'
