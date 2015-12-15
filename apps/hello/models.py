@@ -1,7 +1,7 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.db import models
 
-# Create your models here.
+
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **kwargs):
         if not email:
@@ -26,6 +26,7 @@ class UserManager(BaseUserManager):
         account.save()
 
         return account
+
 
 class User(AbstractBaseUser):
     username = models.CharField(max_length=40, unique=True)
@@ -54,8 +55,3 @@ class User(AbstractBaseUser):
     def __str__(self):
         return self.email
 
-    def get_full_name(self):
-        return ' '.join([self.first_name, self.last_name])
-
-    def get_short_name(self):
-        return self.first_name
