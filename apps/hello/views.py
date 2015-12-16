@@ -1,11 +1,13 @@
 from apps.hello.models import User
+from django.contrib.auth import get_user
 from django.shortcuts import render
 
 
 def home(request):
-    queryset = User.objects.get(pk=1)
-    context = {
-        "contacts": queryset
-    }
-    print(queryset)
+    context = {}
+    if request.user.is_authenticated():
+        queryset = User.objects.get(pk=get_user(request).pk)
+        context = {
+            "contacts": queryset
+        }
     return render(request, "base.html", context)
