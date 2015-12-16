@@ -19,6 +19,10 @@
     <body id="{% block body_id %}{% endblock %}" class="{% block body_class %}{% endblock %}">
         <h1>42 Coffee Cups Test Assignment</h1>
 
+        {% if not user.is_authenticated %}
+            <h1>Please, login to admin page to see contact information</h1>
+        {% else %}
+
         <div class="left">
             <p>Name: {{ contacts.first_name }} </p>
             <p>Last name: {{ contacts.last_name }}</p>
@@ -32,6 +36,8 @@
             <p>Skype: {{ contacts.skype }} </p>
             <p>Other Contacts: {{ contacts.other_contacts }} </p>
         </div>
+
+        {% endif %}
 
     </body>
 </html>
