@@ -2,8 +2,6 @@ from apps.hello.models import User
 from django.core.urlresolvers import reverse
 from django.db import IntegrityError
 from django.test import TestCase, Client
-# Create your tests here.
-from wheel.signatures import assertTrue
 
 
 class ContactTests(TestCase):
@@ -13,7 +11,7 @@ class ContactTests(TestCase):
         assert(contact.email == 'test@email.com')
         contact.save()
         contact_pk = contact.pk
-        assertTrue(User.objects.filter(pk=contact_pk).exists())
+        self.assertTrue(User.objects.filter(pk=contact_pk).exists())
 
     def test_delete_contact(self):
         contact = User.objects.create(username='test',email='test@email.com')
@@ -24,7 +22,7 @@ class ContactTests(TestCase):
 
     def test_create_superuser(self):
         super_user = User.objects.create_superuser("test@email.com", "admin", username="admin")
-        assertTrue(super_user.is_admin)
+        self.assertTrue(super_user.is_admin)
 
     def test_user_name_is_required(self):
         try:
