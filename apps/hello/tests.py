@@ -22,10 +22,16 @@ class ContactTests(TestCase):
             contact = User.objects.create(email='test2@email.com')
             contact.save(force_insert=True)
 
-    def test_home_view(self):
+    def test_home_view_user_is_authenticated(self):
         User.objects.create_user(username='test', email='test@email.com', password='test')
         self.client.login(username='test@email.com', password='test')
         response = self.client.get(reverse('home'))
         self.assertEquals(response.context['user'].is_authenticated(), True)
         self.assertEquals(response.context['user'].username, 'test')
         self.assertEquals(response.status_code, 200)
+
+    def test_home_view_user_is_not_authenticated(self):
+        User.objects.create_user(username='test', email='test@email.com', password='test')
+        response = self.client.get(reverse('home'))
+        self.assertEquals(response.context['user'].is_authenticated(), False)
+        self.assertContains(response, "Please, login to admin page to see contact information")
