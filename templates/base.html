@@ -22,10 +22,6 @@
             <h1>Please, login to admin page to see contact information</h1>
         {% else %}
 
-        {% if not user.is_authenticated %}
-            <h1>Please, login to admin page to see contact information</h1>
-        {% else %}
-
         <div class="left">
             <p>Name: {{ user.first_name }} </p>
             <p>Last name: {{ user.last_name }}</p>
