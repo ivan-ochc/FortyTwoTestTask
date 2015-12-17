@@ -1,7 +1,7 @@
 from apps.hello.models import User
 from django.core.urlresolvers import reverse
 from django.db import IntegrityError
-from django.test import TestCase, Client
+from django.test import TestCase
 
 
 class ContactTests(TestCase):
