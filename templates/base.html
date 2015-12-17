@@ -24,17 +24,23 @@
         {% else %}
 
         <div class="left">
-            <p>Name: {{ contacts.first_name }} </p>
-            <p>Last name: {{ contacts.last_name }}</p>
-            <p>Date of birth: {{ contacts.date_of_birth }}</p>
-            <p>Bio: {{ contacts.bio }} </p>
+            <p>Name: {{ user.first_name }} </p>
+            <p>Last name: {{ user.last_name }}</p>
+            <p>Date of birth: {{ user.date_of_birth }}</p>
+            <p>Bio:</p>
+            <textarea rows="4" cols="50" disabled>
+                {{ user.bio }}
+            </textarea>
         </div>
         <div class="right">
             <p>Contacts</p>
-            <p>Email: {{ contacts.email }} </p>
-            <p>Jabber: {{ contacts.jabber }} </p>
-            <p>Skype: {{ contacts.skype }} </p>
-            <p>Other Contacts: {{ contacts.other_contacts }} </p>
+            <p>Email: {{ user.email }} </p>
+            <p>Jabber: {{ user.jabber }} </p>
+            <p>Skype: {{ user.skype }} </p>
+            <p>Other Contacts:</p>
+            <textarea rows="4" cols="50" disabled>
+             {{ user.other_contacts }}
+            </textarea>
         </div>
 
         {% endif %}

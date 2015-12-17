@@ -6,3 +6,13 @@
 .right {
     margin-left: 50%;
 }
+
+textarea {
+}
+
+textarea:disabled {
+    background: #FFF;
+    border-color: #FFF;
+    white-space: normal;
+    resize: none;
+}

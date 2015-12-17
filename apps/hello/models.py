@@ -1,10 +1,15 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.core.exceptions import ValidationError
+from django.core.serializers import json
+from django.core.validators import validate_email
 from django.db import models
 
 
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **kwargs):
-        if not email:
+        try:
+            validate_email(email)
+        except ValidationError:
             raise ValueError('Users must have a valid email address.')
 
         if not kwargs.get('username'):

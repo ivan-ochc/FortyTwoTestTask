@@ -1,3 +1,9 @@
+from apps.hello.forms import ContactForm
+from apps.hello.models import User
 from django.contrib import admin
 
-# Register your models here.
+
+class ContactAdmin(admin.ModelAdmin):
+    form = ContactForm
+
+admin.site.register(User, ContactAdmin)
