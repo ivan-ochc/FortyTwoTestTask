@@ -6,6 +6,9 @@ from django.test import TestCase
 
 class ContactTests(TestCase):
     def test_create_superuser(self):
+        """
+        Check create_superuser function.
+        """
         super_user = User.objects.create_superuser("test@email.com",
                                                    "admin",
                                                    username="admin")
