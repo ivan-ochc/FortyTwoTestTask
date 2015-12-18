@@ -1,5 +1,4 @@
 from json import dumps
-import sys
 from apps.hello import models
 
 
