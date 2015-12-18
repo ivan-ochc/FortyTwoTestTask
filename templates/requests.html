@@ -1,0 +1,24 @@
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+test
+<div id="requests">
+<p id="request"> </p>
+</div>
+<script>
+var getRequests = function(){
+          $.ajax({
+              async: true,
+              type: "GET",
+              url: "/get_requests/",
+              success: function(data){
+                  var $requestHolder = $('#request');
+                  $requestHolder.empty();
+                  $.each(JSON.parse(data), function(idx, obj) {
+                       $requestHolder.append(obj.fields.host + " " + obj.fields.path + " " + obj.fields.method + " " + obj.fields.status_code + "<br/>")
+                  })
+                  setTimeout(getRequests, 2000)
+              }
+          });
+};
+
+getRequests();
+</script>
