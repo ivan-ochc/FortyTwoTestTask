@@ -1,7 +1,10 @@
-<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+{% extends "base.html" %}
+{% block content %}
+<h1>Requests:</h1>
 <div id="requests">
 <p id="request"> </p>
 </div>
+<a href="{% url 'home' %}">Back to Contact page</a>
 <script>
 var getRequests = function(){
           $.ajax({
@@ -21,3 +24,4 @@ var getRequests = function(){
 
 getRequests();
 </script>
+{% endblock %}

@@ -17,32 +17,9 @@
 
     </head>
     <body id="{% block body_id %}{% endblock %}" class="{% block body_class %}{% endblock %}">
-        <h1>42 Coffee Cups Test Assignment</h1>
-        {% if not user.is_authenticated %}
-            <h1>Please, login to admin page to see contact information</h1>
-        {% else %}
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    {% block content %}
 
-        <div class="left">
-            <p>Name: {{ user.first_name }} </p>
-            <p>Last name: {{ user.last_name }}</p>
-            <p>Date of birth: {{ user.date_of_birth }}</p>
-            <p>Bio:</p>
-            <textarea rows="4" cols="50" disabled>
-                {{ user.bio }}
-            </textarea>
-        </div>
-        <div class="right">
-            <p>Contacts</p>
-            <p>Email: {{ user.email }} </p>
-            <p>Jabber: {{ user.jabber }} </p>
-            <p>Skype: {{ user.skype }} </p>
-            <p>Other Contacts:</p>
-            <textarea rows="4" cols="50" disabled>
-             {{ user.other_contacts }}
-            </textarea>
-        </div>
-
-        {% endif %}
-        <a href="{% url 'requests' %}">Requests</a>
+     {% endblock %}
     </body>
 </html>

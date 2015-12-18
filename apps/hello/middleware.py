@@ -3,19 +3,13 @@ from apps.hello import models
 
 
 class WebRequestMiddleware(object):
-    def process_view(self, request, view_func, view_args, view_kwargs):
-        setattr(request, 'hide_post', view_kwargs.pop('hide_post', False))
-
     def process_response(self, request, response):
 
         if request.path.endswith('/favicon.ico') or \
            request.path.endswith('/get_requests/'):
             return response
 
-        try:
-            self.save(request, response)
-        except Exception as e:
-            print(e)
+        self.save(request, response)
 
         return response
 
