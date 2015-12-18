@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.core.exceptions import ValidationError
+from django.core.serializers import json
 from django.core.validators import validate_email
 from django.db import models
 
@@ -74,3 +75,19 @@ class User(AbstractBaseUser):
 
     def get_short_name(self):
         return self.first_name
+
+
+class WebRequest(models.Model):
+    time = models.DateTimeField(auto_now_add=True)
+    host = models.CharField(max_length=1000)
+    path = models.CharField(max_length=1000)
+    method = models.CharField(max_length=50)
+    uri = models.CharField(max_length=2000)
+    status_code = models.IntegerField()
+    get = models.TextField(blank=True, null=True)
+    post = models.TextField(blank=True, null=True)
+    is_secure = models.BooleanField()
+    is_ajax = models.BooleanField()
+
+    def dumps(value):
+        return json.dumps(value, default=lambda o: None)

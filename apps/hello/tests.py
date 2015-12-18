@@ -63,3 +63,14 @@ class ContactTests(TestCase):
         response = self.client.get(reverse('home'))
         self.assertEquals(response.context['user'].is_authenticated(), False)
         self.assertContains(response, message)
+
+
+class RequestsTests(TestCase):
+    def test_request_is_showed_on_page(self):
+        """
+        Check that saved request is showed on page
+        """
+        response = self.client.get(reverse('requests'))
+        self.assertContains(response, "requests")
+        self.assertContains(response, "GET")
+        self.assertContains(response, "200")
