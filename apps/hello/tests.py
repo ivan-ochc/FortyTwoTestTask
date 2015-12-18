@@ -16,21 +16,33 @@ class ContactTests(TestCase):
         self.assertTrue(super_user.is_admin)
 
     def test_user_name_is_required(self):
+        """
+        Check that user name is required parameter.
+        """
         with self.assertRaisesRegexp(ValueError,
                                      'Users must have a valid username.'):
             User.objects.create_user("test@email.com")
 
     def test_email_is_valid(self):
+        """
+        Check email validation
+        """
         with self.assertRaisesRegexp(ValueError,
                                      'Users must have a valid email address.'):
             User.objects.create_user("test@", username="test")
 
     def test_only_unique_emails_are_accepted(self):
+        """
+        Check that only unique emails are accepted
+        """
         with self.assertRaises(IntegrityError):
             contact = User.objects.create(email='test2@email.com')
             contact.save(force_insert=True)
 
     def test_home_view_user_is_authenticated(self):
+        """
+        Check home view with authenticated user
+        """
         User.objects.create_user(username='test',
                                  email='test@email.com',
                                  password='test')
@@ -41,6 +53,9 @@ class ContactTests(TestCase):
         self.assertEquals(response.status_code, 200)
 
     def test_home_view_user_is_not_authenticated(self):
+        """
+        Check home view with unauthenticated user
+        """
         message = "Please, login to admin page to see contact information"
         User.objects.create_user(username='test',
                                  email='test@email.com',
