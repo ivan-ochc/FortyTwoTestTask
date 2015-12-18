@@ -16,7 +16,7 @@ class WebRequestMiddleware(object):
         try:
             self.save(request, response)
         except Exception as e:
-            print(e, end="Error saving request log")
+            print(e)
 
         return response
 
