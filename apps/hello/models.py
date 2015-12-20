@@ -88,6 +88,3 @@ class WebRequest(models.Model):
     post = models.TextField(blank=True, null=True)
     is_secure = models.BooleanField()
     is_ajax = models.BooleanField()
-
-    def dumps(value):
-        return json.dumps(value, default=lambda o: None)

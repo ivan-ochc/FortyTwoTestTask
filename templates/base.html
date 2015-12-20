@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>{% block title %}{% endblock title %}42 Cups</title>
+        <title>{% block title %}{% endblock title %}42 Coffee Cups</title>
 
         <meta http-equiv="X-UA-Compatible" content="chrome=IE7" />
 
@@ -11,15 +11,16 @@
         <meta name="apple-mobile-web-app-capable" content="yes"/>
         <meta name="apple-mobile-web-app-status-bar-style" content="black" />
 
-        <link rel="stylesheet" href="{% static 'css/screen.css' %}" media="screen, projection"/>
-
-        {% block extra_head %}{% endblock extra_head %}
+       {% include 'css.html' %}
 
     </head>
     <body id="{% block body_id %}{% endblock %}" class="{% block body_class %}{% endblock %}">
-    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    {% include 'javascript.html' %}
+    {% include 'navbar.html' %}
+    <div class="container">
     {% block content %}
 
      {% endblock %}
+    </div>
     </body>
 </html>

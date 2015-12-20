@@ -1,76 +1,21 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 {% block content %}
-<h1>Requests:</h1>
-<div id="requests">
-<p id="request"> </p>
+<script src="{% static 'js/requests.js' %}"></script>
+
+<div class="container">
+  <h1>Requests</h1>
+  <table id="requests" class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Host</th>
+        <th>Path</th>
+        <th>Http method</th>
+        <th>Http status code</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
 </div>
-<a href="{% url 'home' %}">Back to Contact page</a>
-<script>
-var prevData;
-var newRequestsCounter = 0;
-var getRequests = function(){
-          $.ajax({
-              async: true,
-              type: "GET",
-              url: "/get_requests/",
-              success: function(data){
-                  if (prevData != data){
-                      if (prevData != null){
-                          var requests = $.parseJSON('[' + prevData + ']');
-                          $.each(JSON.parse(data), function(idx, obj) {
-                              var isNew = true
-                              for (x in requests[0]) {
-                                  if (requests[0][x].pk == obj.pk) {
-                                      isNew = false
-                                  }
-                              }
-                              if (isNew){
-                                 newRequestsCounter++
-                              }
-                        })
-                      }
-                      prevData = data;
-                  }
-                  var visible = vis();
-                  if (visible){
-                     document.title = '42 Cups'
-                     newRequestsCounter = 0
-                  } else {
-                     if (newRequestsCounter == 0) {
-                         document.title = '42 Cups'
-                     } else {
-                         document.title =  'There are ' + newRequestsCounter + ' new requests'
-                     }
-                  }
-
-                  var $requestHolder = $('#request');
-                  $requestHolder.empty();
-                  $.each(JSON.parse(data), function(idx, obj) {
-                       $requestHolder.append(obj.fields.host + " " + obj.fields.path + " " + obj.fields.method + " " + obj.fields.status_code + "<br/>")
-                  })
-                  setTimeout(getRequests, 2000)
-              }
-          });
-};
-getRequests();
-
-var vis = (function(){
-    var stateKey, eventKey, keys = {
-        hidden: "visibilitychange",
-        webkitHidden: "webkitvisibilitychange",
-        mozHidden: "mozvisibilitychange",
-        msHidden: "msvisibilitychange"
-    };
-    for (stateKey in keys) {
-        if (stateKey in document) {
-            eventKey = keys[stateKey];
-            break;
-        }
-    }
-    return function(c) {
-        if (c) document.addEventListener(eventKey, c);
-        return !document[stateKey];
-    }
-})();
-</script>
 {% endblock %}
