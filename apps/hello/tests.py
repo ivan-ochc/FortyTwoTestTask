@@ -74,8 +74,6 @@ class RequestsTests(TestCase):
         """
         response = self.client.get(reverse('requests'))
         self.assertContains(response, "requests")
-        # self.assertContains(response, "GET")
-        # self.assertContains(response, "200")
 
     def test_last_10_requests_are_displayed_on_page(self):
         """
