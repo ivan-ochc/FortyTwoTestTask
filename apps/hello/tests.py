@@ -79,14 +79,14 @@ class RequestsTests(TestCase):
         """
         Check that last 10 requests are displayed on page
         """
-        for x in range(0, 10):
+        for x in range(11):
             self.client.get(reverse('home'))
         response = self.client.get(reverse('get_requests'))
         json_string = response.content.decode('utf-8')
         requests = json.loads(json.loads(json_string))
         displayed_only_10_requests = True
         for request in requests:
-            if request['pk'] == 0:
+            if request['pk'] == 1:
                 displayed_only_10_requests = False
 
         self.assertTrue(displayed_only_10_requests)
