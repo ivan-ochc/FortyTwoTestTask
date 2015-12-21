@@ -1,7 +1,9 @@
+import json
+
 from apps.hello.models import User
 from django.core.urlresolvers import reverse
 from django.db import IntegrityError
-from django.test import TestCase
+from django.test import TestCase, Client
 
 
 class ContactTests(TestCase):
@@ -66,11 +68,27 @@ class ContactTests(TestCase):
 
 
 class RequestsTests(TestCase):
-    def test_request_is_showed_on_page(self):
+    def test_request_is_displayed_on_page(self):
         """
         Check that saved request is showed on page
         """
         response = self.client.get(reverse('requests'))
         self.assertContains(response, "requests")
-        self.assertContains(response, "GET")
-        self.assertContains(response, "200")
+        # self.assertContains(response, "GET")
+        # self.assertContains(response, "200")
+
+    def test_last_10_requests_are_displayed_on_page(self):
+        """
+        Check that last 10 requests are displayed on page
+        """
+        for x in range(0, 10):
+            self.client.get(reverse('home'))
+        response = self.client.get(reverse('get_requests'))
+        json_string = response.content.decode('utf-8')
+        requests = json.loads(json.loads(json_string))
+        displayed_only_10_requests = True
+        for request in requests:
+            if request['pk'] == 0:
+                displayed_only_10_requests = False
+
+        self.assertTrue(displayed_only_10_requests)
