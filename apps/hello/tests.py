@@ -84,9 +84,4 @@ class RequestsTests(TestCase):
         response = self.client.get(reverse('get_requests'))
         json_string = response.content.decode('utf-8')
         requests = json.loads(json.loads(json_string))
-        displayed_only_10_requests = True
-        for request in requests:
-            if request['pk'] == 1:
-                displayed_only_10_requests = False
-
-        self.assertTrue(displayed_only_10_requests)
+        self.assertEquals(requests[9]['pk'], 2)
