@@ -27,7 +27,6 @@ def contact_form(request):
             user.username = form.cleaned_data['username']
             user.first_name = form.cleaned_data['first_name']
             user.last_name = form.cleaned_data['last_name']
-            # user.date_of_birth = form.cleaned_data['date_of_birth'],
             user.email = form.cleaned_data['email']
             user.jabber = form.cleaned_data['jabber']
             user.skype = form.cleaned_data['skype']
