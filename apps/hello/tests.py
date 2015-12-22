@@ -84,4 +84,5 @@ class RequestsTests(TestCase):
         response = self.client.get(reverse('get_requests'))
         json_string = response.content.decode('utf-8')
         requests = json.loads(json.loads(json_string))
+        self.assertEquals(len(requests), 10)
         self.assertEquals(requests[9]['pk'], 2)
