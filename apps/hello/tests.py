@@ -1,5 +1,6 @@
 import json
 
+from apps.hello.forms import ContactForm
 from apps.hello.models import User
 from django.core.urlresolvers import reverse
 from django.db import IntegrityError
@@ -86,3 +87,16 @@ class RequestsTests(TestCase):
         requests = json.loads(json.loads(json_string))
         self.assertEquals(len(requests), 10)
         self.assertEquals(requests[9]['pk'], 2)
+
+
+class UpdateContactTests(TestCase):
+    def test_form(self):
+        form_data = {
+            'username': 'test',
+            'email': 'test@email.com',
+            'jabber': 'j_id',
+            'skype': 's_id',
+        }
+
+        form = ContactForm(data=form_data)
+        self.assertTrue(form.is_valid())
