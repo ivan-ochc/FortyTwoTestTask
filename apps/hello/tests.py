@@ -91,6 +91,9 @@ class RequestsTests(TestCase):
 
 class UpdateContactTests(TestCase):
     def test_form(self):
+        """
+        Check that form must be valid with required parameters
+        """
         form_data = {
             'username': 'test',
             'email': 'test@email.com',
