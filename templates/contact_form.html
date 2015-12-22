@@ -1,12 +1,19 @@
 {% extends "base.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
 {% block content %}
+<script src="{% static 'js/form.js' %}"></script>
+<div id="loading-div" style="display: none;">
+</div>
+<p id="message"></p>
+<div class="col-xs-3 pull-left">
 <form action="{% url 'contact_form' %}" method="post" id="contactform">
-    <div>
+    <div id="ajaxform">
     {% csrf_token %}
     {{ form.non_field_errors }}
-    {{ form.as_p }}
-    <p><input type="submit" value="Save" id="savebutton"/></p>
+    {{ form|crispy }}
+    <input type="submit" value="Save" id="savebutton"/>
     </div>
   </form>
-
+</div>
 {% endblock %}

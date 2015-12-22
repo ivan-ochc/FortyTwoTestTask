@@ -1,8 +1,10 @@
 from apps.hello.forms import ContactForm
 from apps.hello.models import WebRequest, User
+from django.conf import settings
+from django.contrib.auth import logout, authenticate, login
 from django.core import serializers
 from django.http import JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 
 def home(request):
@@ -27,6 +29,7 @@ def contact_form(request):
             user.username = form.cleaned_data['username']
             user.first_name = form.cleaned_data['first_name']
             user.last_name = form.cleaned_data['last_name']
+            user.date_of_birth = form.cleaned_data['date_of_birth']
             user.email = form.cleaned_data['email']
             user.jabber = form.cleaned_data['jabber']
             user.skype = form.cleaned_data['skype']
@@ -34,6 +37,30 @@ def contact_form(request):
             user.bio = form.cleaned_data['bio']
             user.other_contacts = form.cleaned_data['other_contacts']
             user.save()
+
+            if request.is_ajax():
+                if getattr(settings, 'DEBUG', False):
+                    import time
+                    time.sleep(2)
     else:
         form = ContactForm(instance=user)
     return render(request, "contact_form.html", {'form': form})
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('home')
+
+
+def login_view(request):
+    username = request.POST['email']
+    password = request.POST['password']
+    user = authenticate(username=username, password=password)
+    if user is not None:
+        if user.is_active:
+            login(request, user)
+            return redirect('home')
+        else:
+            return render(request, 'login_inactive.html', {})
+    else:
+        return render(request, 'login_none.html', {})

@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
     'apps.hello',
 )
 
@@ -130,3 +131,5 @@ FIXTURE_DIRS = (
 )
 
 AUTH_USER_MODEL = 'hello.User'
+
+CRISPY_TEMPLATE_PACK = "bootstrap3"
