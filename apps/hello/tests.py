@@ -59,7 +59,7 @@ class ContactTests(TestCase):
         """
         Check home view with unauthenticated user
         """
-        message = "Please, login to admin page to see contact information"
+        message = "Please, login to see contact information"
         User.objects.create_user(username='test',
                                  email='test@email.com',
                                  password='test')
