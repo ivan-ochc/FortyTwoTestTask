@@ -96,6 +96,8 @@ class UpdateContactTests(TestCase):
             'email': 'test@email.com',
             'jabber': 'j_id',
             'skype': 's_id',
+            'bio': 'some bio',
+            'other_contacts': 'come contacts'
         }
 
         form = ContactForm(data=form_data)
