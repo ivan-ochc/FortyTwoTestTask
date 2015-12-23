@@ -1,13 +1,9 @@
 import json
-
-from PIL import Image
 from apps.hello.forms import ContactForm
 from apps.hello.models import User
-from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.core.urlresolvers import reverse
 from django.db import IntegrityError
 from django.test import TestCase
-from django.utils.six import BytesIO
 
 
 class ContactTests(TestCase):

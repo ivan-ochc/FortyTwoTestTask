@@ -1,9 +1,5 @@
-from io import BytesIO
-
-from PIL import Image
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.core.exceptions import ValidationError
-from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.core.validators import validate_email
 from django.db import models
 
