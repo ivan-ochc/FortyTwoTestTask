@@ -2,4 +2,5 @@ Django==1.8
 django-crispy-forms==1.5.2
 Pillow==3.0.0
 setuptools==18.2
+django-smartfield==1.0.9
 42cc-pystyle

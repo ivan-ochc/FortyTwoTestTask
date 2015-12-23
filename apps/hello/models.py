@@ -2,6 +2,9 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.db import models
+from smartfields import fields
+from smartfields.dependencies import FileDependency
+from smartfields.processors import ImageProcessor
 
 
 class UserManager(BaseUserManager):
@@ -48,7 +51,11 @@ class User(AbstractBaseUser):
     bio = models.TextField(blank=True)
     other_contacts = models.TextField(blank=True)
 
-    image = models.ImageField(upload_to='img/', blank=True)
+    image = fields.ImageField(upload_to='img/', blank=True, dependencies=[
+        FileDependency(processor=ImageProcessor(
+            format='JPEG',
+            scale={'max_width': 200, 'max_height': 200}))
+    ])
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
