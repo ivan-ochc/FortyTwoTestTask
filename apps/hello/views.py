@@ -1,10 +1,12 @@
+import json
 from apps.hello.forms import ContactForm
 from apps.hello.models import WebRequest, User
 from django.conf import settings
 from django.contrib.auth import logout, authenticate, login
 from django.core import serializers
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseBadRequest
 from django.shortcuts import render, redirect
+from setuptools.compat import unicode
 
 
 def home(request):
@@ -24,24 +26,24 @@ def get_requests(request):
 def contact_form(request):
     user = User.objects.get(pk=request.user.pk)
     if request.POST:
-        form = ContactForm(request.POST, instance=user)
+        form = ContactForm(request.POST, request.FILES, instance=user)
         if form.is_valid():
-            user.username = form.cleaned_data['username']
-            user.first_name = form.cleaned_data['first_name']
-            user.last_name = form.cleaned_data['last_name']
-            user.date_of_birth = form.cleaned_data['date_of_birth']
-            user.email = form.cleaned_data['email']
-            user.jabber = form.cleaned_data['jabber']
-            user.skype = form.cleaned_data['skype']
-            user.is_admin = form.cleaned_data['is_admin']
-            user.bio = form.cleaned_data['bio']
-            user.other_contacts = form.cleaned_data['other_contacts']
-            user.save()
+            form.save()
 
             if request.is_ajax():
                 if getattr(settings, 'DEBUG', False):
                     import time
                     time.sleep(2)
+
+        else:
+            if request.is_ajax():
+                errors_dict = {}
+                if form.errors:
+                    for error in form.errors:
+                        e = form.errors[error]
+                        errors_dict[error] = unicode(e)
+
+                return HttpResponseBadRequest(json.dumps(errors_dict))
     else:
         form = ContactForm(instance=user)
     return render(request, "contact_form.html", {'form': form})

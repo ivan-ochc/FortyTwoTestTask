@@ -8,10 +8,7 @@
             <p>Name: {{ user.first_name }} </p>
             <p>Last name: {{ user.last_name }}</p>
             <p>Date of birth: {{ user.date_of_birth }}</p>
-            <p>Bio:</p>
-            <textarea rows="4" cols="50" disabled>
-                {{ user.bio }}
-            </textarea>
+            <img class="img-responsive" style="max-width: 70%" src="uploads/{{ user.image }}">
         </div>
         <div class="right">
             <p>Contacts</p>
@@ -21,6 +18,10 @@
             <p>Other Contacts:</p>
             <textarea rows="4" cols="50" disabled>
              {{ user.other_contacts }}
+            </textarea>
+            <p>Bio:</p>
+            <textarea rows="4" cols="50" disabled>
+                {{ user.bio }}
             </textarea>
         </div>
 

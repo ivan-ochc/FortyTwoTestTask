@@ -1,3 +1,11 @@
+html{
+    min-height:100%;/* make sure it is at least as tall as the viewport */
+    position:relative;
+}
+body{
+    height:100%; /* force the BODY element to match the height of the HTML element */
+}
+
 .left {
     float: left;
     width: 50%;
@@ -7,7 +15,8 @@
     margin-left: 50%;
 }
 
-textarea {
+.errorlist {
+    color : red;
 }
 
 textarea:disabled {
@@ -24,7 +33,7 @@ textarea:disabled {
     left: 0px;
     top: 0px;
     z-index: 100;
-    height: 151%;
+    height: 100%;
     width: 100%;
     overflow: hidden;
     background-image: url('../img/ajax-loader.gif');

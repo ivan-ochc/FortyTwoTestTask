@@ -1,5 +1,9 @@
+from io import BytesIO
+
+from PIL import Image
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.core.exceptions import ValidationError
+from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.core.validators import validate_email
 from django.db import models
 
@@ -35,18 +39,20 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser):
     username = models.CharField(max_length=40, unique=True)
 
-    first_name = models.CharField(max_length=40, blank=True)
-    last_name = models.CharField(max_length=40, blank=True)
+    first_name = models.CharField(max_length=40)
+    last_name = models.CharField(max_length=40)
     date_of_birth = models.DateField(blank=True, null=True)
 
     email = models.EmailField(unique=True)
-    jabber = models.CharField(max_length=40, unique=True)
-    skype = models.CharField(max_length=40, unique=True)
+    jabber = models.CharField(max_length=40, unique=True, blank=True)
+    skype = models.CharField(max_length=40, unique=True, blank=True)
 
     is_admin = models.BooleanField(default=False)
 
-    bio = models.TextField()
-    other_contacts = models.TextField()
+    bio = models.TextField(blank=True)
+    other_contacts = models.TextField(blank=True)
+
+    image = models.ImageField(upload_to='img/', blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

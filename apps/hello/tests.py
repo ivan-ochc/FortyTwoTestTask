@@ -1,10 +1,13 @@
 import json
 
+from PIL import Image
 from apps.hello.forms import ContactForm
 from apps.hello.models import User
+from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.core.urlresolvers import reverse
 from django.db import IntegrityError
 from django.test import TestCase
+from django.utils.six import BytesIO
 
 
 class ContactTests(TestCase):
@@ -90,18 +93,29 @@ class RequestsTests(TestCase):
 
 
 class UpdateContactTests(TestCase):
-    def test_form(self):
+    def test_valid_form(self):
         """
         Check that form must be valid with required parameters
         """
         form_data = {
             'username': 'test',
             'email': 'test@email.com',
-            'jabber': 'j_id',
-            'skype': 's_id',
-            'bio': 'some bio',
-            'other_contacts': 'come contacts'
+            'first_name': 'test_name',
+            'last_name': 'test_last_name',
         }
 
         form = ContactForm(data=form_data)
         self.assertTrue(form.is_valid())
+
+    def test_invalid_form(self):
+        """
+        Check that form must be invalid without required parameters
+        """
+        form_data = {
+            'username': 'test',
+            'email': 'test@email.com',
+            'first_name': 'test_name',
+        }
+
+        form = ContactForm(data=form_data)
+        self.assertFalse(form.is_valid())
