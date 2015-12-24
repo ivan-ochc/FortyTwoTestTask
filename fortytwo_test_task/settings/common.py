@@ -118,6 +118,7 @@ STATICFILES_DIRS = (
 )
 
 
+
 # Template Settings
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or
@@ -126,6 +127,7 @@ TEMPLATE_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
     os.path.join(BASE_DIR, 'templates'),
 )
+
 
 FIXTURE_DIRS = (
     os.path.join(BASE_DIR, '/apps/hello/fixtures'),

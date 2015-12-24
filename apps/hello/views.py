@@ -45,22 +45,3 @@ def contact_form(request):
             form = ContactForm(instance=user)
         return render(request, "contact_form.html", {'form': form})
     raise ValueError('Only authorized user has access to this view')
-
-
-def logout_view(request):
-    logout(request)
-    return redirect('home')
-
-
-def login_view(request):
-    username = request.POST['email']
-    password = request.POST['password']
-    user = authenticate(username=username, password=password)
-    if user is not None:
-        if user.is_active:
-            login(request, user)
-            return redirect('home')
-        else:
-            return render(request, 'login_inactive.html', {})
-    else:
-        return render(request, 'login_none.html', {})
