@@ -72,6 +72,10 @@ class RequestsTests(TestCase):
         """
         Check that saved request is showed on page
         """
+        User.objects.create_user(username='test',
+                                 email='test@email.com',
+                                 password='test')
+        self.client.login(username='test@email.com', password='test')
         response = self.client.get(reverse('requests'))
         self.assertContains(response, "requests")
 
@@ -79,6 +83,10 @@ class RequestsTests(TestCase):
         """
         Check that last 10 requests are displayed on page
         """
+        User.objects.create_user(username='test',
+                                 email='test@email.com',
+                                 password='test')
+        self.client.login(username='test@email.com', password='test')
         for x in range(11):
             self.client.get(reverse('home'))
         response = self.client.get(reverse('get_requests'))
@@ -115,3 +123,24 @@ class UpdateContactTests(TestCase):
 
         form = ContactForm(data=form_data)
         self.assertFalse(form.is_valid())
+
+    def test_get_edit_form_unauthorized_user(self):
+        """
+        Check that only authorized user has access to edit form
+        """
+        with self.assertRaisesRegexp(
+                ValueError,
+                'Only authorized user has access to this view'):
+            self.client.get(reverse('contact_form'))
+
+    def test_post_edit_form_unauthorized_user(self):
+        """
+        Check that only authorized user has access to edit form
+        """
+        with self.assertRaisesRegexp(
+                ValueError,
+                'Only authorized user has access to this view'):
+            self.client.post('/contact_form/', {'username': 'test',
+                                                'email': 'test@email.com',
+                                                'first_name': 'test_name',
+                                                'last_name': 'test_last_name'})

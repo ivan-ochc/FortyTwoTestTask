@@ -42,6 +42,7 @@ function readURL(input) {
             var reader = new FileReader();
 
             reader.onload = function (e) {
+                $("img").show()
                 $('#image_preview').attr('src', e.target.result);
             }
 

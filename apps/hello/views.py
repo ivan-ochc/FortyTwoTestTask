@@ -15,7 +15,10 @@ def home(request):
 
 
 def requests(request):
-    return render(request, "requests.html", {})
+    if request.user.is_authenticated():
+        return render(request, "requests.html", {})
+    else:
+        raise ValueError('Only authorized user has access to this view')
 
 
 def get_requests(request):
@@ -25,29 +28,32 @@ def get_requests(request):
 
 
 def contact_form(request):
-    user = User.objects.get(pk=request.user.pk)
-    if request.POST:
-        form = ContactForm(request.POST, request.FILES, instance=user)
-        if form.is_valid():
-            form.save()
+    if request.user.is_authenticated():
+        user = User.objects.get(pk=request.user.pk)
+        if request.POST:
+            form = ContactForm(request.POST, request.FILES, instance=user)
+            if form.is_valid():
+                form.save()
 
-            if request.is_ajax():
-                if getattr(settings, 'DEBUG', False):
-                    import time
-                    time.sleep(2)
+                if request.is_ajax():
+                    if getattr(settings, 'DEBUG', False):
+                        import time
+                        time.sleep(2)
 
+            else:
+                if request.is_ajax():
+                    errors_dict = {}
+                    if form.errors:
+                        for error in form.errors:
+                            e = form.errors[error]
+                            errors_dict[error] = unicode(e)
+
+                    return HttpResponseBadRequest(json.dumps(errors_dict))
         else:
-            if request.is_ajax():
-                errors_dict = {}
-                if form.errors:
-                    for error in form.errors:
-                        e = form.errors[error]
-                        errors_dict[error] = unicode(e)
-
-                return HttpResponseBadRequest(json.dumps(errors_dict))
+            form = ContactForm(instance=user)
+        return render(request, "contact_form.html", {'form': form})
     else:
-        form = ContactForm(instance=user)
-    return render(request, "contact_form.html", {'form': form})
+        raise ValueError('Only authorized user has access to this view')
 
 
 def logout_view(request):
