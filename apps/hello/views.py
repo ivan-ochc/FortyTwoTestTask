@@ -1,7 +1,7 @@
 import json
 
 from apps.hello.forms import ContactForm
-from apps.hello.models import WebRequest, User
+from apps.hello.models import WebRequest
 from django.core import serializers
 from django.http import JsonResponse, HttpResponseBadRequest
 from django.shortcuts import render
