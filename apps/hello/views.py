@@ -2,10 +2,9 @@ import json
 
 from apps.hello.forms import ContactForm
 from apps.hello.models import WebRequest, User
-from django.contrib.auth import logout, authenticate, login
 from django.core import serializers
 from django.http import JsonResponse, HttpResponseBadRequest
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from setuptools.compat import unicode
 
 
