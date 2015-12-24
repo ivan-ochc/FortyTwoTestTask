@@ -27,7 +27,9 @@ def get_requests(request):
 def contact_form(request):
     if request.user.is_authenticated():
         if request.POST:
-            form = ContactForm(request.POST, request.FILES, instance=request.user)
+            form = ContactForm(request.POST,
+                               request.FILES,
+                               instance=request.user)
             if form.is_valid():
                 form.save()
             else:
