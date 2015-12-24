@@ -17,8 +17,7 @@ def home(request):
 def requests(request):
     if request.user.is_authenticated():
         return render(request, "requests.html", {})
-    else:
-        raise ValueError('Only authorized user has access to this view')
+    raise ValueError('Only authorized user has access to this view')
 
 
 def get_requests(request):
@@ -52,8 +51,7 @@ def contact_form(request):
         else:
             form = ContactForm(instance=user)
         return render(request, "contact_form.html", {'form': form})
-    else:
-        raise ValueError('Only authorized user has access to this view')
+    raise ValueError('Only authorized user has access to this view')
 
 
 def logout_view(request):
