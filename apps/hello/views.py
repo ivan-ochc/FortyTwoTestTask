@@ -33,12 +33,6 @@ def contact_form(request):
             form = ContactForm(request.POST, request.FILES, instance=user)
             if form.is_valid():
                 form.save()
-
-                if request.is_ajax():
-                    if getattr(settings, 'DEBUG', False):
-                        import time
-                        time.sleep(2)
-
             else:
                 if request.is_ajax():
                     errors_dict = {}

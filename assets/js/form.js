@@ -9,7 +9,9 @@ $(document).ready(function() {
             }
 
             function unblock_form() {
-                $("#loading-div").hide()
+                setTimeout(function() {
+                        $("#loading-div").hide();
+                }, 1000);
                 $( "#id_date_of_birth" ).datepicker({dateFormat: "yy-mm-dd"});
             }
 
