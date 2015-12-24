@@ -12,7 +12,7 @@ urlpatterns = patterns(
     url(r'^get_requests/$', 'hello.views.get_requests', name='get_requests'),
     url(r'^contact_form/$', 'hello.views.contact_form', name='contact_form'),
     url(r'^logout/$', 'django.contrib.auth.views.logout',
-        {'template_name': 'contact.html'}, name='logout'),
+        {'next_page': 'home'}, name='logout'),
     url(r'^login/$', 'django.contrib.auth.views.login',
         {'template_name': 'contact.html'}, name='login'),
 
