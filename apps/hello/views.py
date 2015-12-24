@@ -26,9 +26,8 @@ def get_requests(request):
 
 def contact_form(request):
     if request.user.is_authenticated():
-        user = User.objects.get(pk=request.user.pk)
         if request.POST:
-            form = ContactForm(request.POST, request.FILES, instance=user)
+            form = ContactForm(request.POST, request.FILES, instance=request.user)
             if form.is_valid():
                 form.save()
             else:
@@ -41,6 +40,6 @@ def contact_form(request):
 
                     return HttpResponseBadRequest(json.dumps(errors_dict))
         else:
-            form = ContactForm(instance=user)
+            form = ContactForm(instance=request.user)
         return render(request, "contact_form.html", {'form': form})
     raise ValueError('Only authorized user has access to this view')
