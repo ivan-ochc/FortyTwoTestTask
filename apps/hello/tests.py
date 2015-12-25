@@ -1,4 +1,9 @@
 import json
+
+from apps.hello import models
+from django.core.management import call_command
+from io import StringIO
+
 from apps.hello.forms import ContactForm
 from apps.hello.models import User
 from django.core.urlresolvers import reverse
@@ -158,3 +163,16 @@ class EditTemplateTagTests(TestCase):
         template = Template("{% load edit_link %} {% edit_link user %}")
         rendered = template.render(Context({"user": user}))
         self.assertIn(str(user.pk), rendered)
+
+
+class DisplayModelsCommandTests(TestCase):
+    def test_display_models_command(self):
+        """
+        Check that command returns models name and quantity of objects
+        """
+        out = StringIO()
+        call_command('display_models', 'hello', stdout=out)
+        self.assertIn("User", out.getvalue())
+        self.assertIn("WebRequest", out.getvalue())
+        self.assertIn(str(models.User.objects.count()), out.getvalue())
+        self.assertIn(str(models.WebRequest.objects.count()), out.getvalue())
