@@ -3,6 +3,7 @@ from apps.hello.forms import ContactForm
 from apps.hello.models import User
 from django.core.urlresolvers import reverse
 from django.db import IntegrityError
+from django.template import Template, Context
 from django.test import TestCase
 
 
@@ -144,3 +145,16 @@ class UpdateContactTests(TestCase):
                                                 'email': 'test@email.com',
                                                 'first_name': 'test_name',
                                                 'last_name': 'test_last_name'})
+
+
+class EditTemplateTagTests(TestCase):
+    def test_url_to_admin_page_is_generated_by_tag(self):
+        """
+        Check that tag generates url to admin edit page
+        """
+        user = User.objects.create_superuser("test@email.com",
+                                             "admin",
+                                             username="admin")
+        template = Template("{% load edit_link %} {% edit_link user %}")
+        rendered = template.render(Context({"user": user}))
+        self.assertIn(str(user.pk), rendered)
