@@ -11,8 +11,8 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         app = get_app(options['app'][0])
         for model in django.apps.apps.get_models(app):
-            self.stdout.write("Model name: " + model._meta.object_name)
+            self.stdout.write("Model name: " + str(model._meta.object_name))
             self.stdout.write("Quantity of objects: " +
                               str(model.objects.count()))
-            self.stderr.write("error: " + model._meta.object_name)
+            self.stderr.write("error: " + str(model._meta.object_name))
             self.stderr.write("error: " + str(model.objects.count()))
