@@ -2,7 +2,7 @@ import json
 
 from apps.hello import models
 from django.core.management import call_command
-from io import StringIO
+from io import BytesIO
 
 from apps.hello.forms import ContactForm
 from apps.hello.models import User
@@ -170,9 +170,9 @@ class DisplayModelsCommandTests(TestCase):
         """
         Check that command returns models name and quantity of objects
         """
-        out = StringIO()
-        call_command('display_models', 'hello', stdout=out)
-        self.assertIn("User", out.getvalue())
-        self.assertIn("WebRequest", out.getvalue())
-        self.assertIn(str(models.User.objects.count()), out.getvalue())
-        self.assertIn(str(models.WebRequest.objects.count()), out.getvalue())
+        out = BytesIO()
+        call_command('display_models', 'hello', stdout=bytes(out))
+        self.assertIn("User", out.getvalue().decode('utf-8'))
+        self.assertIn("WebRequest", out.getvalue().decode('utf-8'))
+        self.assertIn(str(models.User.objects.count()), out.getvalue().decode('utf-8'))
+        self.assertIn(str(models.WebRequest.objects.count()), out.getvalue().decode('utf-8'))
