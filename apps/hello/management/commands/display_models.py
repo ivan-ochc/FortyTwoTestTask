@@ -16,4 +16,4 @@ class Command(BaseCommand):
             self.stdout.write(u"Quantity of objects: " +
                               str(model.objects.count()))
             self.stderr.write(u"error: " + model._meta.object_name)
-            self.stderr.write(u"error: " + str(model.objects.count()))
+            self.stderr.write("error: " + str(model.objects.count()))
