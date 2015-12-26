@@ -171,8 +171,8 @@ class DisplayModelsCommandTests(TestCase):
         Check that command returns models name and quantity of objects
         """
         out = BytesIO()
-        call_command('display_models', 'hello', stdout=bytes(out))
-        self.assertIn("User", out.getvalue().decode('utf-8'))
+        call_command('display_models', 'hello', stdout=out)
+        self.assertIn("User", out.read().decode('utf-8'))
         self.assertIn("WebRequest", out.getvalue().decode('utf-8'))
-        self.assertIn(str(models.User.objects.count()), out.getvalue().decode('utf-8'))
+        self.assertIn(str(models.User.objects.count()), out.getvalue())
         self.assertIn(str(models.WebRequest.objects.count()), out.getvalue())
