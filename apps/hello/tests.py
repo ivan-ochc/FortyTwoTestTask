@@ -175,4 +175,4 @@ class DisplayModelsCommandTests(TestCase):
         self.assertIn("User", out.getvalue().decode('utf-8'))
         self.assertIn("WebRequest", out.getvalue().decode('utf-8'))
         self.assertIn(str(models.User.objects.count()), out.getvalue().decode('utf-8'))
-        self.assertIn(str(models.WebRequest.objects.count()), out.getvalue().decode('utf-8'))
+        self.assertIn(str(models.WebRequest.objects.count()), out.getvalue())
