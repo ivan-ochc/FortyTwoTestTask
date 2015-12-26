@@ -173,6 +173,6 @@ class DisplayModelsCommandTests(TestCase):
         out = BytesIO()
         call_command('display_models', 'hello', stdout=out)
         self.assertIn("User", out.read().decode('utf-8'))
-        self.assertIn("WebRequest", out.getvalue().decode('utf-8'))
+        self.assertIn("WebRequest", out.getvalue())
         self.assertIn(str(models.User.objects.count()), out.getvalue())
         self.assertIn(str(models.WebRequest.objects.count()), out.getvalue())
