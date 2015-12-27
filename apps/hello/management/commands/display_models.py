@@ -1,7 +1,6 @@
 import django.apps
 from django.core.management import BaseCommand
 from django.db.models.loading import get_app
-from setuptools.compat import unicode
 
 
 class Command(BaseCommand):
