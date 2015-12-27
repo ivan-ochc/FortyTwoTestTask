@@ -23,10 +23,10 @@ class Command(BaseCommand):
                                   str(model.objects.count()))
                 self.stderr.write("error: " + model._meta.object_name)
                 self.stderr.write("error: " + str(model.objects.count()))
-        else:
-            for model in django.apps.apps.get_models():
-                self.stdout.write("Model name: " + model._meta.object_name)
-                self.stdout.write("Quantity of objects: " +
-                                  str(model.objects.count()))
-                self.stderr.write("error: " + model._meta.object_name)
-                self.stderr.write("error: " + str(model.objects.count()))
+            return
+        for model in django.apps.apps.get_models():
+            self.stdout.write("Model name: " + model._meta.object_name)
+            self.stdout.write("Quantity of objects: " +
+                              str(model.objects.count()))
+            self.stderr.write("error: " + model._meta.object_name)
+            self.stderr.write("error: " + str(model.objects.count()))
