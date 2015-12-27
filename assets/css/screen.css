@@ -41,16 +41,16 @@ textarea:disabled {
     background-repeat: no-repeat;
 }
 
-table.tablesorter thead tr .header {
+table.tablesorter thead tr th:last-child{
     background-image: url(../img/bg.gif);
     background-repeat: no-repeat;
     background-position: center right;
     cursor: pointer;
     min-width: 30px;
 }
-table.tablesorter thead tr .headerSortUp {
+table.tablesorter thead > tr > th.tablesorter-header.header.tablesorter-headerAsc {
     background-image: url(../img/asc.gif);
 }
-table.tablesorter thead tr .headerSortDown {
+table.tablesorter thead > tr > th.tablesorter-header.header.tablesorter-headerDesc {
     background-image: url(../img/desc.gif);
 }

@@ -22,10 +22,12 @@ var getRequests = function(){
                         })
                       }
                       prevData = data;
+
                       $('#requests > tbody').empty();
                       $.each(JSON.parse(data), function (idx, obj) {
                           $('#requests > tbody').append('<tr><td>' + obj.fields.host + '</td><td>' + obj.fields.path + '</td><td>' + obj.fields.method + '</td><td>' + obj.fields.status_code + '</td><td>' + obj.fields.priority + '</td></tr>')
                       })
+                      $("#requests").trigger("update");
                   }
                   var visible = vis();
                   if (visible){
@@ -38,7 +40,7 @@ var getRequests = function(){
                          document.title =  'There are ' + newRequestsCounter + ' new requests'
                      }
                   }
-                  $("#requests").trigger("update");
+
                   setTimeout(getRequests, 2000)
               }
           });
@@ -66,6 +68,13 @@ var vis = (function(){
 
 setTimeout(function() {
     $('.tablesorter').tablesorter({
+        widgets: ["saveSort"],
+        widgetOptions: {
+            filter_columnFilters : true,
+            filter_searchDelay: 100,
+            filter_startsWith: false,
+            filter_defaultAttrib : 'data-value'
+        },
         // *** Appearance ***
         // fix the column widths
         widthFixed: true,
@@ -122,10 +131,7 @@ setTimeout(function() {
         // jQuery selectors used to find the header cells.
         selectorHeaders: 'thead th',
 
-        // *** css classes to use ***
-        cssAsc: "headerSortUp",
         cssChildRow: "expand-child",
-        cssDesc: "headerSortDown",
         cssHeader: "header",
         tableClass: 'tablesorter',
 
@@ -134,6 +140,7 @@ setTimeout(function() {
 
         // *** send messages to console ***
         debug: false
+
     });
     }, 500)
 
