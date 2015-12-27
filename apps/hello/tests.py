@@ -169,12 +169,25 @@ class EditTemplateTagTests(TestCase):
 
 
 class DisplayModelsCommandTests(TestCase):
-    def test_display_models_command(self):
+    def test_display_app_models_command(self):
         """
-        Check that command returns models name and quantity of objects
+        Check that command returns app models name and quantity of objects
         """
         out = StringIO()
-        call_command('display_models', 'hello', stdout=out)
+        call_command('display_models', '--app', 'hello', stdout=out)
+        self.assertIn("User", out.getvalue())
+        self.assertIn("WebRequest", out.getvalue())
+        self.assertIn(str(models.User.objects.count()), out.getvalue())
+        self.assertIn(str(models.WebRequest.objects.count()), out.getvalue())
+
+    def test_display_project_models_command(self):
+        """
+        Check that command returns project models name and quantity of objects
+        """
+        out = StringIO()
+        call_command('display_models', stdout=out)
+        self.assertIn("ContentType", out.getvalue())
+        self.assertIn("Permission", out.getvalue())
         self.assertIn("User", out.getvalue())
         self.assertIn("WebRequest", out.getvalue())
         self.assertIn(str(models.User.objects.count()), out.getvalue())
