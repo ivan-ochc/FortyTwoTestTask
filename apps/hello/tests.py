@@ -165,7 +165,7 @@ class EditTemplateTagTests(TestCase):
                                              username="admin")
         template = Template("{% load edit_link %} {% edit_link user %}")
         rendered = template.render(Context({"user": user}))
-        self.assertIn(str(user.pk), rendered)
+        self.assertIn("/admin/hello/user/" + str(user.pk), rendered)
 
 
 class DisplayModelsCommandTests(TestCase):
