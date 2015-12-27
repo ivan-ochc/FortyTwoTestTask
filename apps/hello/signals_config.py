@@ -6,4 +6,4 @@ class SignalsConfig(AppConfig):
     verbose_name = 'Hello Application'
 
     def ready(self):
-        import apps.hello.signals
+        import apps.hello.signals  # noqa
