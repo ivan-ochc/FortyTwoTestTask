@@ -192,3 +192,17 @@ class DisplayModelsCommandTests(TestCase):
         self.assertIn("WebRequest", out.getvalue())
         self.assertIn(str(models.User.objects.count()), out.getvalue())
         self.assertIn(str(models.WebRequest.objects.count()), out.getvalue())
+
+
+class SignalsTests(TestCase):
+    def test_signals_are_logged(self):
+        """
+        Check that signals are logged
+        """
+        User.objects.create_user("test@email.com",
+                                 username="test")
+        self.assertEquals(models.SignalsLog.objects.get(type='Save').type,
+                          'Save')
+        User.objects.filter(username="test").delete()
+        self.assertEquals(models.SignalsLog.objects.get(type='Delete').type,
+                          'Delete')
