@@ -128,19 +128,15 @@ class UpdateContactTests(TestCase):
         """
         Check that only authorized user has access to edit form
         """
-        with self.assertRaisesRegexp(
-                ValueError,
-                'Only authorized user has access to this view'):
-            self.client.get(reverse('contact_form'))
+        response = self.client.get(reverse('contact_form'))
+        self.assertEquals(response.status_code, 403)
 
     def test_post_edit_form_unauthorized_user(self):
         """
         Check that only authorized user has access to edit form
         """
-        with self.assertRaisesRegexp(
-                ValueError,
-                'Only authorized user has access to this view'):
-            self.client.post('/contact_form/', {'username': 'test',
+        response = self.client.post('/contact_form/', {'username': 'test',
                                                 'email': 'test@email.com',
                                                 'first_name': 'test_name',
                                                 'last_name': 'test_last_name'})
+        self.assertEquals(response.status_code, 403)
