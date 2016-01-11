@@ -1,4 +1,6 @@
 #!/bin/bash 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd $DIR
 . bin/activate
 now=$(date +"%m_%d_%Y")
 file="$now.dat"
