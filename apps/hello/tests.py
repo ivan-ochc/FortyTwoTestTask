@@ -135,8 +135,9 @@ class UpdateContactTests(TestCase):
         """
         Check that only authorized user has access to edit form
         """
-        response = self.client.post('/contact_form/', {'username': 'test',
-                                                'email': 'test@email.com',
-                                                'first_name': 'test_name',
-                                                'last_name': 'test_last_name'})
+        response = self.client.post('/contact_form/',
+                                    {'username': 'test',
+                                     'email': 'test@email.com',
+                                     'first_name': 'test_name',
+                                     'last_name': 'test_last_name'})
         self.assertEquals(response.status_code, 403)
