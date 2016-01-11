@@ -3,6 +3,7 @@ import json
 from apps.hello.forms import ContactForm
 from apps.hello.models import WebRequest
 from django.core import serializers
+from django.core.exceptions import PermissionDenied
 from django.http import JsonResponse, HttpResponseBadRequest
 from django.shortcuts import render
 from setuptools.compat import unicode
@@ -15,7 +16,7 @@ def home(request):
 def requests(request):
     if request.user.is_authenticated():
         return render(request, "requests.html", {})
-    raise ValueError('Only authorized user has access to this view')
+    raise PermissionDenied
 
 
 def get_requests(request):
@@ -44,4 +45,4 @@ def contact_form(request):
         else:
             form = ContactForm(instance=request.user)
         return render(request, "contact_form.html", {'form': form})
-    raise ValueError('Only authorized user has access to this view')
+    raise PermissionDenied
