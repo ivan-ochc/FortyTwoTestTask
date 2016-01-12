@@ -199,6 +199,7 @@ class SignalsTests(TestCase):
         """
         Check that signals are logged
         """
+        models.SignalsLog.objects.all().delete()
         User.objects.create_user("test@email.com",
                                  username="test")
         self.assertEquals(models.SignalsLog.objects.get(type='Save').type,
