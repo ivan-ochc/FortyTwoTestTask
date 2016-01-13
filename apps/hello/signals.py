@@ -4,10 +4,11 @@ from django.dispatch import receiver
 
 
 @receiver(post_save)
-def model_post_save(sender, **kwargs):
+def model_post_save(sender, created, **kwargs):
     if sender is models.SignalsLog:
         return
-    save('Save', format(kwargs['instance'].__dict__))
+    action = 'Save' if created else 'Update'
+    save(action, format(kwargs['instance'].__dict__))
 
 
 @receiver(post_delete)
