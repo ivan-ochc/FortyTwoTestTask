@@ -104,6 +104,17 @@ class RequestsTests(TestCase):
         self.assertEquals(len(requests), 10)
         self.assertEquals(requests[9]['pk'], 2)
 
+    def test_priority_of_request(self):
+        """
+        Check priority of requests
+        """
+        self.client.get(reverse('home'))
+        request = models.WebRequest.objects.get(path='/')
+        self.assertEquals(request.priority, 1)
+        self.client.get(reverse('admin:index'))
+        request = models.WebRequest.objects.get(path='/admin/')
+        self.assertEquals(request.priority, 0)
+
 
 class UpdateContactTests(TestCase):
     def test_valid_form(self):
