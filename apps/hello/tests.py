@@ -162,17 +162,49 @@ class EditTemplateTagTests(TestCase):
                                              username="admin")
         template = Template("{% load edit_link %} {% edit_link user %}")
         rendered = template.render(Context({"user": user}))
-        self.assertIn(str(user.pk), rendered)
+        self.assertIn("/admin/hello/user/" + str(user.pk), rendered)
 
 
 class DisplayModelsCommandTests(TestCase):
-    def test_display_models_command(self):
+    def test_display_app_models_command(self):
         """
-        Check that command returns models name and quantity of objects
+        Check that command returns app models name and quantity of objects
         """
         out = StringIO()
-        call_command('display_models', 'hello', stdout=out)
+        call_command('display_models', '--app', 'hello', stdout=out)
         self.assertIn("User", out.getvalue())
         self.assertIn("WebRequest", out.getvalue())
         self.assertIn(str(models.User.objects.count()), out.getvalue())
         self.assertIn(str(models.WebRequest.objects.count()), out.getvalue())
+
+    def test_display_project_models_command(self):
+        """
+        Check that command returns project models name and quantity of objects
+        """
+        out = StringIO()
+        call_command('display_models', stdout=out)
+        self.assertIn("ContentType", out.getvalue())
+        self.assertIn("Permission", out.getvalue())
+        self.assertIn("User", out.getvalue())
+        self.assertIn("WebRequest", out.getvalue())
+        self.assertIn(str(models.User.objects.count()), out.getvalue())
+        self.assertIn(str(models.WebRequest.objects.count()), out.getvalue())
+
+
+class SignalsTests(TestCase):
+    def test_signals_are_logged(self):
+        """
+        Check that signals are logged
+        """
+        models.SignalsLog.objects.all().delete()
+        User.objects.create_user("test@email.com",
+                                 username="test")
+        self.assertEquals(models.SignalsLog.objects.get(type='Save').type,
+                          'Save')
+        User.objects.filter(pk=1).update(email="test2@email.com")
+        User.objects.get(pk=1).save()
+        self.assertEquals(models.SignalsLog.objects.get(type='Update').type,
+                          'Update')
+        User.objects.filter(username="test").delete()
+        self.assertEquals(models.SignalsLog.objects.get(type='Delete').type,
+                          'Delete')

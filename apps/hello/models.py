@@ -96,3 +96,8 @@ class WebRequest(models.Model):
     post = models.TextField(blank=True, null=True)
     is_secure = models.BooleanField()
     is_ajax = models.BooleanField()
+
+
+class SignalsLog(models.Model):
+    type = models.CharField(max_length=7)
+    payload = models.CharField(max_length=1000)
