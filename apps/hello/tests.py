@@ -204,6 +204,10 @@ class SignalsTests(TestCase):
                                  username="test")
         self.assertEquals(models.SignalsLog.objects.get(type='Save').type,
                           'Save')
+        User.objects.filter(pk=1).update(email="test2@email.com")
+        User.objects.get(pk=1).save()
+        self.assertEquals(models.SignalsLog.objects.get(type='Update').type,
+                          'Update')
         User.objects.filter(username="test").delete()
         self.assertEquals(models.SignalsLog.objects.get(type='Delete').type,
                           'Delete')
