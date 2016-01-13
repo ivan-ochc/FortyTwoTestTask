@@ -1,14 +1,16 @@
 from apps.hello import models
+from django.apps import apps
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 
 
 @receiver(post_save)
 def model_post_save(sender, created, **kwargs):
-    if sender is models.SignalsLog:
-        return
     action = 'Save' if created else 'Update'
-    save(action, format(kwargs['instance'].__dict__))
+    if sender in apps.get_models():
+        if sender is models.SignalsLog:
+            return
+        save(action, format(kwargs['instance'].__dict__))
 
 
 @receiver(post_delete)
