@@ -121,15 +121,19 @@ class UpdateContactTests(TestCase):
         """
         Check that form must be valid with required parameters
         """
+        User.objects.create_user(username='test',
+                                 email='test@email.com',
+                                 password='test')
+        self.client.login(username='test@email.com', password='test')
         form_data = {
             'username': 'test',
             'email': 'test@email.com',
             'first_name': 'test_name',
             'last_name': 'test_last_name',
+            'teams': 1,
         }
-
-        form = ContactForm(data=form_data)
-        self.assertTrue(form.is_valid())
+        response = self.client.post('/contact_form/', form_data)
+        self.assertEquals(response.status_code, 200)
 
     def test_invalid_form(self):
         """
@@ -247,3 +251,24 @@ class TeamTests(TestCase):
         self.client.login(username='test@email.com', password='test')
         self.client.post('/team_form/', {'name': 'test'})
         self.assertEquals(Team.objects.get(pk=1).name, 'test')
+
+    def test_add_team_to_user(self):
+        """
+        Check adding team to user
+        """
+        User.objects.create_user(username='test',
+                                 email='test@email.com',
+                                 password='test')
+        self.client.login(username='test@email.com', password='test')
+        self.client.post('/team_form/', {'name': 'test'})
+        form_data = {
+            'username': 'test',
+            'email': 'test@email.com',
+            'first_name': 'test_name',
+            'last_name': 'test_last_name',
+            'teams': 1,
+        }
+        self.client.post('/contact_form/', form_data)
+        user = User.objects.get(pk=1)
+        for team in user.team_set.all():
+            self.assertEquals(team.name, 'test')
