@@ -237,8 +237,8 @@ class TeamTests(TestCase):
         """
         Check that only authorized user has access to team form
         """
-        response = self.client.post('/team_form/',
-                                    {'name': 'test'})
+        response = self.client.post(reverse('team_form'),
+                                    kwargs={'name': 'test', 'users': 1})
         self.assertEquals(response.status_code, 403)
 
     def test_create_new_team(self):
@@ -249,8 +249,10 @@ class TeamTests(TestCase):
                                  email='test@email.com',
                                  password='test')
         self.client.login(username='test@email.com', password='test')
-        self.client.post('/team_form/', {'name': 'test'})
+        self.client.post(reverse('team_form'), {'name': 'test', 'users': 1})
         self.assertEquals(Team.objects.get(pk=1).name, 'test')
+        for user in Team.objects.get(pk=1).user.all():
+            self.assertEquals(user.username, 'test')
 
     def test_add_team_to_user(self):
         """
@@ -260,7 +262,7 @@ class TeamTests(TestCase):
                                  email='test@email.com',
                                  password='test')
         self.client.login(username='test@email.com', password='test')
-        self.client.post('/team_form/', {'name': 'test'})
+        self.client.post(reverse('team_form'), {'name': 'test'})
         form_data = {
             'username': 'test',
             'email': 'test@email.com',
