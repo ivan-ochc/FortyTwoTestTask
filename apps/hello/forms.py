@@ -47,3 +47,5 @@ class TeamForm(forms.ModelForm):
     class Meta:
         model = Team
         fields = ['name']
+
+    users = forms.ModelMultipleChoiceField(queryset=User.objects.all())

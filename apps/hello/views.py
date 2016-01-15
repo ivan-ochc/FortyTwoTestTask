@@ -56,6 +56,9 @@ def team_form(request):
             form = TeamForm(request.POST or None)
             if form.is_valid():
                 form.save()
+                team = Team.objects.get(name=form.cleaned_data['name'])
+                for user in form.cleaned_data['users']:
+                    team.user.add(user)
             else:
                 if request.is_ajax():
                     errors_dict = {}
