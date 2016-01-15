@@ -102,3 +102,8 @@ class WebRequest(models.Model):
 class SignalsLog(models.Model):
     type = models.CharField(max_length=7)
     payload = models.CharField(max_length=1000)
+
+
+class Team(models.Model):
+    name = models.CharField(max_length=50)
+    user = models.ManyToManyField(User)
