@@ -11,6 +11,7 @@ urlpatterns = patterns(
     url(r'^requests/$', 'hello.views.requests', name='requests'),
     url(r'^get_requests/$', 'hello.views.get_requests', name='get_requests'),
     url(r'^contact_form/$', 'hello.views.contact_form', name='contact_form'),
+    url(r'^team_form/$', 'hello.views.team_form', name='team_form'),
     url(r'^logout/$', 'django.contrib.auth.views.logout',
         {'next_page': 'home'}, name='logout'),
     url(r'^login/$', 'django.contrib.auth.views.login',

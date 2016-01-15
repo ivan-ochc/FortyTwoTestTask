@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+{% block content %}
+<script src="{% static 'js/team_form.js' %}"></script>
+<div id="loading-div" style="display: none;">
+</div>
+<p id="message"></p>
+
+<form action="{% url 'team_form' %}" method="post" id="teamform">
+    <div id="ajaxform" class="col-sm-6">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    {% crispy form %}
+    <input class="btn" type="submit" value="Create Team" id="savebutton"/>
+    </div>
+  </form>
+
+
+{% endblock %}

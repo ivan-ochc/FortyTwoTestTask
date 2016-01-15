@@ -1,4 +1,4 @@
-from apps.hello.models import User
+from apps.hello.models import User, Team
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, Div, HTML
 from django import forms
@@ -39,3 +39,9 @@ class ContactForm(forms.ModelForm):
             )
         )
         super(ContactForm, self).__init__(*args, **kwargs)
+
+
+class TeamForm(forms.ModelForm):
+    class Meta:
+        model = Team
+        fields = ['name']

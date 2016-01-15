@@ -1,6 +1,6 @@
 import json
 
-from apps.hello.forms import ContactForm
+from apps.hello.forms import ContactForm, TeamForm
 from apps.hello.models import WebRequest
 from django.core import serializers
 from django.core.exceptions import PermissionDenied
@@ -45,4 +45,25 @@ def contact_form(request):
         else:
             form = ContactForm(instance=request.user)
         return render(request, "contact_form.html", {'form': form})
+    raise PermissionDenied
+
+
+def team_form(request):
+    if request.user.is_authenticated():
+        if request.POST:
+            form = TeamForm(request.POST or None)
+            if form.is_valid():
+                form.save()
+            else:
+                if request.is_ajax():
+                    errors_dict = {}
+                    if form.errors:
+                        for error in form.errors:
+                            e = form.errors[error]
+                            errors_dict[error] = unicode(e)
+
+                    return HttpResponseBadRequest(json.dumps(errors_dict))
+        else:
+            form = TeamForm()
+        return render(request, "team_form.html", {'form': form})
     raise PermissionDenied
