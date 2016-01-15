@@ -8,7 +8,7 @@ class ContactForm(forms.ModelForm):
     class Meta:
         model = User
         exclude = ['created_at', 'updated_at', 'last_login', 'password']
-    teams = forms.ModelChoiceField(queryset=Team.objects.all())
+    teams = forms.ModelMultipleChoiceField(queryset=Team.objects.all())
 
     def __init__(self, *args, **kwargs):
         self.helper = FormHelper()

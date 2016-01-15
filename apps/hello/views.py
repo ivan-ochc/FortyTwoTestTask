@@ -32,8 +32,8 @@ def contact_form(request):
                                request.FILES,
                                instance=request.user)
             if form.is_valid():
-                team = Team.objects.get(name=form.cleaned_data['teams'])
-                team.user.add(request.user)
+                for team in form.cleaned_data['teams']:
+                    team.user.add(request.user)
                 form.save()
             else:
                 if request.is_ajax():
