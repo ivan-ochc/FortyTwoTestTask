@@ -8,7 +8,7 @@ except ImportError:
     from io import StringIO
 
 from apps.hello.forms import ContactForm
-from apps.hello.models import User
+from apps.hello.models import User, Team
 from django.core.urlresolvers import reverse
 from django.db import IntegrityError
 from django.template import Template, Context
@@ -219,3 +219,31 @@ class SignalsTests(TestCase):
         User.objects.filter(username="test").delete()
         self.assertEquals(models.SignalsLog.objects.get(type='Delete').type,
                           'Delete')
+
+
+class TeamTests(TestCase):
+    def test_get_team_form_unauthorized_user(self):
+        """
+        Check that only authorized user has access to team form
+        """
+        response = self.client.get(reverse('team_form'))
+        self.assertEquals(response.status_code, 403)
+
+    def test_post_team_form_unauthorized_user(self):
+        """
+        Check that only authorized user has access to team form
+        """
+        response = self.client.post('/team_form/',
+                                    {'name': 'test'})
+        self.assertEquals(response.status_code, 403)
+
+    def test_create_new_team(self):
+        """
+        Check creating of new team
+        """
+        User.objects.create_user(username='test',
+                                 email='test@email.com',
+                                 password='test')
+        self.client.login(username='test@email.com', password='test')
+        self.client.post('/team_form/', {'name': 'test'})
+        self.assertEquals(Team.objects.get(pk=1).name, 'test')
