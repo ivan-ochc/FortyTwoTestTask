@@ -14,6 +14,10 @@
             <p>Name: {{ user.first_name }} </p>
             <p>Last name: {{ user.last_name }}</p>
             <p>Date of birth: {{ user.date_of_birth }}</p>
+            <p>Teams:</p>
+            {%  for team in user.team_set.all %}
+               {{ team }}<br>
+            {% endfor %}
             <img class="img-responsive" style="max-width: 70%" src="uploads/{{ user.image }}">
         </div>
         <div class="right">

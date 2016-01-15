@@ -1,7 +1,7 @@
 import json
 
 from apps.hello.forms import ContactForm, TeamForm
-from apps.hello.models import WebRequest
+from apps.hello.models import WebRequest, Team
 from django.core import serializers
 from django.core.exceptions import PermissionDenied
 from django.http import JsonResponse, HttpResponseBadRequest
@@ -32,6 +32,8 @@ def contact_form(request):
                                request.FILES,
                                instance=request.user)
             if form.is_valid():
+                team = Team.objects.get(name=form.cleaned_data['teams'])
+                team.user.add(request.user)
                 form.save()
             else:
                 if request.is_ajax():

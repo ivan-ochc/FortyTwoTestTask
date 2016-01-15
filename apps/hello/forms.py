@@ -8,6 +8,7 @@ class ContactForm(forms.ModelForm):
     class Meta:
         model = User
         exclude = ['created_at', 'updated_at', 'last_login', 'password']
+    teams = forms.ModelChoiceField(queryset=Team.objects.all())
 
     def __init__(self, *args, **kwargs):
         self.helper = FormHelper()
@@ -19,6 +20,7 @@ class ContactForm(forms.ModelForm):
                     'first_name',
                     'last_name',
                     'date_of_birth',
+                    'teams',
                     'image',
                     HTML("""{% if form.image.value %}<img id="image_preview"
                      class="img-responsive"
