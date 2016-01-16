@@ -1,5 +1,4 @@
 import json
-
 from apps.hello.forms import ContactForm, TeamForm
 from apps.hello.models import WebRequest, Team
 from django.core import serializers
@@ -45,7 +44,10 @@ def contact_form(request):
 
                     return HttpResponseBadRequest(json.dumps(errors_dict))
         else:
-            form = ContactForm(instance=request.user)
+            form = ContactForm(
+                instance=request.user,
+                initial={'teams':
+                         [team.id for team in request.user.team_set.all()]})
         return render(request, "contact_form.html", {'form': form})
     raise PermissionDenied
 
