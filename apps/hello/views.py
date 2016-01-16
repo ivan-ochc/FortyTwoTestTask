@@ -31,6 +31,8 @@ def contact_form(request):
                                request.FILES,
                                instance=request.user)
             if form.is_valid():
+                for team in request.user.team_set.all():
+                    team.user.remove(request.user)
                 for team in form.cleaned_data['teams']:
                     team.user.add(request.user)
                 form.save()
